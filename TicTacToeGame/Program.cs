@@ -6,13 +6,38 @@ namespace TicTacToeGame
     {
         static void Main(string[] args)
         {
-            // Crear una nueva instancia del juego
+            // creating a new TicTacToe game
+            Console.WriteLine("Welcome to Tic Tac Toe!");
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1. Play against another player");
+            Console.WriteLine("2. Play against computer");
+            int option = int.Parse(Console.ReadLine());
+
+            if (option == 1)
+            {
+                PlayAgainstHuman();
+            }
+            else if (option == 2)
+            {
+                PlayAgainstComputer();
+            }
+            else
+            {
+                Console.WriteLine("Invalid option. Exiting the game.");
+            }
+        }
+
+        static void PlayAgainstHuman()
+        {
             TicTacToe game = new TicTacToe();
+            game.StartAgainstHuman();
+        }
 
-            // Comenzar el juego
-            game.Start();
-
-            Console.ReadLine();
+        static void PlayAgainstComputer()
+        {
+            TicTacToe game = new TicTacToe();
+            game.StartAgainstComputer();
         }
     }
     }
+    

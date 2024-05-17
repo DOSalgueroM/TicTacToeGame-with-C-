@@ -16,7 +16,6 @@ namespace TicTacToeGame
             InitializeBoard();
         }
 
-        // Inicializa el tablero con espacios en blanco
         private void InitializeBoard()
         {
             for (int row = 0; row < 3; row++)
@@ -28,9 +27,14 @@ namespace TicTacToeGame
             }
         }
 
-        // Método para imprimir el tablero
         public void PrintBoard()
         {
+            Console.WriteLine(" 1 | 2 | 3 ");
+            Console.WriteLine("---|---|---");
+            Console.WriteLine(" 4 | 5 | 6 ");
+            Console.WriteLine("---|---|---");
+            Console.WriteLine(" 7 | 8 | 9 ");
+            Console.WriteLine();
             for (int row = 0; row < 3; row++)
             {
                 Console.WriteLine(" " + board[row, 0] + " | " + board[row, 1] + " | " + board[row, 2]);
@@ -41,9 +45,11 @@ namespace TicTacToeGame
             }
         }
 
-        // Método para colocar un símbolo en una posición específica
-        public bool PlaceSymbol(int row, int col, char symbol)
+        public bool PlaceSymbol(int position, char symbol)
         {
+            int row = (position - 1) / 3;
+            int col = (position - 1) % 3;
+
             if (row < 0 || row > 2 || col < 0 || col > 2 || board[row, col] != ' ')
             {
                 return false;
@@ -53,10 +59,8 @@ namespace TicTacToeGame
             return true;
         }
 
-        // Método para verificar si hay un ganador
         public bool CheckWinner(char symbol)
         {
-            // Comprobación de filas y columnas
             for (int i = 0; i < 3; i++)
             {
                 if (board[i, 0] == symbol && board[i, 1] == symbol && board[i, 2] == symbol)
@@ -66,7 +70,7 @@ namespace TicTacToeGame
                     return true;
             }
 
-            // Comprobación de diagonales
+            // Verificar diagonales
             if ((board[0, 0] == symbol && board[1, 1] == symbol && board[2, 2] == symbol) ||
                 (board[0, 2] == symbol && board[1, 1] == symbol && board[2, 0] == symbol))
             {
@@ -76,7 +80,6 @@ namespace TicTacToeGame
             return false;
         }
 
-        // Método para verificar si el tablero está lleno
         public bool IsBoardFull()
         {
             for (int row = 0; row < 3; row++)
@@ -93,3 +96,4 @@ namespace TicTacToeGame
         }
     }
 }
+    

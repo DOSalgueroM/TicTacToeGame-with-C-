@@ -17,40 +17,30 @@ namespace TicTacToeGame
             currentPlayer = 'X';
         }
 
-        // Método para iniciar el juego
-        public void Start()
+        public void StartAgainstHuman()
         {
-            Console.WriteLine("Welcome to Tic Tac Toe!");
             Console.WriteLine("Player 1 (X) - Player 2 (O)");
             Console.WriteLine("-----------------------------");
 
             while (true)
             {
-                // Imprimir el tablero
                 board.PrintBoard();
 
-                // Obtener la jugada del jugador actual
-                Console.WriteLine("Player " + currentPlayer + ", enter your move (row [1-3] column [1-3]):");
-                string[] input = Console.ReadLine().Split(' ');
-                int row = int.Parse(input[0]) - 1;
-                int col = int.Parse(input[1]) - 1;
+                Console.WriteLine("Player " + currentPlayer + ", enter your move (1-9):");
+                int position = int.Parse(Console.ReadLine());
 
-                // Verificar si la jugada es válida
-                if (row >= 0 && row < 3 && col >= 0 && col < 3 && board.PlaceSymbol(row, col, currentPlayer))
+                if (board.PlaceSymbol(position, currentPlayer))
                 {
-                    // Verificar si hay un ganador
                     if (board.CheckWinner(currentPlayer))
                     {
                         Console.WriteLine("Player " + currentPlayer + " wins!");
                         break;
                     }
-                    // Verificar si el tablero está lleno (empate)
                     else if (board.IsBoardFull())
                     {
                         Console.WriteLine("It's a draw!");
                         break;
                     }
-                    // Cambiar el jugador
                     currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                 }
                 else
@@ -59,6 +49,70 @@ namespace TicTacToeGame
                 }
             }
         }
+
+        public void StartAgainstComputer()
+        {
+            Console.WriteLine("You are playing against the computer (O)");
+
+            while (true)
+            {
+                
+                board.PrintBoard();
+                Console.WriteLine("Your move (1-9):");
+                int position = int.Parse(Console.ReadLine());
+
+                if (board.PlaceSymbol(position, 'X'))
+                {
+                    if (board.CheckWinner('X'))
+                    {
+                        Console.WriteLine("Congratulations! You win!");
+                        break;
+                    }
+                    else if (board.IsBoardFull())
+                    {
+                        Console.WriteLine("It's a draw!");
+                        break;
+                    }
+
+                   
+                    int computerMove = GetComputerMove();
+                    board.PlaceSymbol(computerMove, 'O');
+
+                    if (board.CheckWinner('O'))
+                    {
+                        board.PrintBoard();
+                        Console.WriteLine("The computer wins! Better luck next time.");
+                        break;
+                    }
+                    else if (board.IsBoardFull())
+                    {
+                        Console.WriteLine("It's a draw!");
+                        break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid move. Try again.");
+                }
+            }
+        
+    }
+
+        private int GetComputerMove()
+        {
+            
+
+            Random random = new Random();
+            int position;
+
+            do
+            {
+                position = random.Next(1, 10);
+            } while (!board.PlaceSymbol(position, 'O'));
+
+            return position;
+        }
     }
 }
+
 
